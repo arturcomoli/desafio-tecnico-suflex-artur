@@ -48,6 +48,11 @@ export const mockUser = {
   password: "password",
 };
 
+export const mockUserService = {
+  name: "mock asdf",
+  password: "password",
+};
+
 export const mockUserCreation = {
   name: "routes creation",
   password: "password",

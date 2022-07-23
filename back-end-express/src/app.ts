@@ -2,9 +2,9 @@ import "reflect-metadata";
 import express from "express";
 import "express-async-errors";
 import "dotenv/config";
-// import ErrorMiddleware from "./middlewares/error.middleware";
+import ErrorHandlingMiddleware from "./middlewares/ErrorHandling.midleware";
 
-// import routes from "./routes";
+import routes from "./routes";
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Desafio Full-stack Suflex!!");
 });
-// app.use(routes);
-// app.use(ErrorMiddleware);
+app.use(routes);
+app.use(ErrorHandlingMiddleware);
 
 export default app;
