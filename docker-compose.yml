@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  db_desafio_suflex:
+    container_name: db_desafio_suflex
+    image: postgres:12
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=desafio_suflex
+    ports:
+      - 5435:5432
+    networks:
+      - apiwebnetwork
+
+  api:
+    container_name: desafio_fullstack_suflex
+    build: ./back-end-express
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - db_desafio_suflex
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db_desafio_suflex:5432/desafio_suflex
+      - PORT=8000
+    command: bash -c 'while !</dev/tcp/db_desafio_suflex/5432; do sleep 1; done; npm run dev'
+    volumes:
+      - ./back-end-express:/backend
+      - ./back-end-express/src:/backend/src
+      - ./back-end-express/nodemon.json:/backend/nodemon.json
+    networks:
+      - apiwebnetwork
+
+  front-end:
+    container_name: front-ent-vite
+    build: ./front-end-react
+    ports:
+      - 3000:3000
+    restart: always
+    volumes:
+      - ./front-end-react:/frontend
+    links:
+      - api
+    networks:
+      - apiwebnetwork
+
+networks:
+  apiwebnetwork:
+    driver: bridge
