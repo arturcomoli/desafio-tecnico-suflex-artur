@@ -10,9 +10,9 @@ import { AppDataSource } from "./data-source";
     console.error(err);
   });
 
-  app.listen(process.env.PORT || 3000, () => {
+  app.listen(process.env.PORT || 3003, () => {
     if (!process.env.PORT) {
-      console.log("Running at 3000");
+      console.log("Running at 3003");
     } else console.log(`Running at ${process.env.PORT}`);
   });
 })();

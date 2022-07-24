@@ -29,7 +29,7 @@ describe("User creation unit test", () => {
   test("Should be able to create a favorite character", async () => {
     const createChar = new CreateCharacterService();
 
-    const char = await createChar.execute({ mockChar, userId });
+    const char = await createChar.execute({ ...mockChar, userId });
 
     expect(char).toHaveProperty("id");
     expect(char).toHaveProperty("name");

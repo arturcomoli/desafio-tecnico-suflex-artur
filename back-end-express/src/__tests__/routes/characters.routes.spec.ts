@@ -16,7 +16,7 @@ describe("API route tests for users model", () => {
   let connection: DataSource;
   let userId: string;
   let userToken: string;
-  let charId: string;
+  let charId: number;
 
   beforeAll(async () => {
     await AppDataSource.initialize()
@@ -30,7 +30,7 @@ describe("API route tests for users model", () => {
     await userRepository.save(user);
 
     const charRepository = AppDataSource.getRepository(Character);
-    const char = charRepository.create({ mockChar2, userId: user.id });
+    const char = charRepository.create({ ...mockChar2, userId: user.id });
     await charRepository.save(char);
 
     const login = await request(app).post("/login").send(mockUser);
@@ -45,9 +45,7 @@ describe("API route tests for users model", () => {
   });
 
   test("Should not be able to create new favorite char without token", async () => {
-    const response = await request(app)
-      .post("/users/characters")
-      .send(mockChar);
+    const response = await request(app).post("/characters").send(mockChar);
 
     expect(response.status).toBe(401);
 
@@ -58,7 +56,7 @@ describe("API route tests for users model", () => {
 
   test("Should be able to create a char whe logged", async () => {
     const response = await request(app)
-      .post("/users/characters")
+      .post("/characters")
       .set("Authorization", `Bearer ${userToken}`)
       .send(mockChar);
 
@@ -81,12 +79,12 @@ describe("API route tests for users model", () => {
 
   test("Should not be able to create double favorite chars", async () => {
     await request(app)
-      .post("/users/characters")
+      .post("/characters")
       .set("Authorization", `Bearer ${userToken}`)
       .send(mockChar);
 
     const response = await request(app)
-      .post("/users/characters")
+      .post("/characters")
       .set("Authorization", `Bearer ${userToken}`)
       .send(mockChar);
 
@@ -101,7 +99,7 @@ describe("API route tests for users model", () => {
 
   test("Should not be able to create a char without the data", async () => {
     const response = await request(app)
-      .post("/users/characters")
+      .post("/characters")
       .set("Authorization", `Bearer ${userToken}`)
       .send({});
 
@@ -112,7 +110,7 @@ describe("API route tests for users model", () => {
   });
 
   test("Should not be able to delete a char without being logged", async () => {
-    const response = await request(app).delete(`/users/characters/${charId}`);
+    const response = await request(app).delete(`/characters/${charId}`);
 
     expect(response.status).toBe(401);
 
@@ -123,7 +121,7 @@ describe("API route tests for users model", () => {
 
   test("Should be able to delete own char when logged in", async () => {
     const response = await request(app)
-      .delete(`/users/characters/${charId}`)
+      .delete(`/characters/${charId}`)
       .set("Authorization", `Bearer ${userToken}`);
 
     expect(response.status).toBe(204);
@@ -134,7 +132,7 @@ describe("API route tests for users model", () => {
     const login = await request(app).post("/login").send(mockUserCreation);
 
     const response = await request(app)
-      .delete(`/users/characters/${charId}`)
+      .delete(`/characters/${charId}`)
       .set("Authorization", `Bearer ${login.body.token}`);
 
     expect(response.status).toBe(403);

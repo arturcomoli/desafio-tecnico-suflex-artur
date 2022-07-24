@@ -1,10 +1,8 @@
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 
-import * as uuid from "uuid";
-import { mockUser } from "../../utils";
+import { mockUserService } from "../../utils";
 import CreateUserService from "../../../services/users/CreateUser.service";
-jest.mock("uuid");
 
 describe("User creation unit test", () => {
   let connection: DataSource;
@@ -22,19 +20,13 @@ describe("User creation unit test", () => {
   });
 
   test("Should be able to create a new user", async () => {
-    const uuidSpy = jest.spyOn(uuid, "v4");
-    uuidSpy.mockReturnValue("some-uuid");
-
     const createUser = new CreateUserService();
 
-    const user = await createUser.execute(mockUser);
+    const user = await createUser.execute(mockUserService);
 
     expect(user).toBeTruthy();
 
-    expect(uuidSpy).toHaveBeenCalled();
-
-    expect(user.id).toEqual("some-uuid");
-    expect(user.name).toEqual(mockUser.name);
+    expect(user.name).toEqual(mockUserService.name);
 
     expect(user).toHaveProperty("password");
   });
