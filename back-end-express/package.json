@@ -8,7 +8,7 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migrate": "typeorm-ts-node-commonjs migration:run -d src/data-source.ts",
     "build": "tsc",
-    "start": "node dist/src/server.js",
+    "start": "node dist/backend/src/server.js",
     "test": "jest"
   },
   "keywords": [],
