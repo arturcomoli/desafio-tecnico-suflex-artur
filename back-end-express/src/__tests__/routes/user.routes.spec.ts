@@ -103,6 +103,18 @@ describe("API route tests for users model", () => {
     expect(response.body.password).toBeUndefined();
   });
 
+  test("Should not be able to update a user with wrong credentials", async () => {
+    const response = await request(app)
+      .patch("/users")
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({ name: "aa", password: "123" });
+
+    expect(response.status).toBe(400);
+
+    expect(response.body).toHaveProperty("status");
+    expect(response.body).toHaveProperty("message");
+  });
+
   test("Should not be able do update to same password", async () => {
     const response = await request(app)
       .patch("/users")
@@ -178,5 +190,23 @@ describe("API route tests for users model", () => {
     expect(response.body).toHaveProperty("favorite_characters");
 
     expect(response.body.password).toBeUndefined();
+  });
+
+  test("Should not be able do self delete when not logged", async () => {
+    const response = await request(app).delete("/users");
+
+    expect(response.status).toBe(401);
+
+    expect(response.body).toHaveProperty("status");
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.message).toEqual("Missing authorization token.");
+  });
+
+  test("Should be able to self delete when logged", async () => {
+    const response = await request(app)
+      .delete("/users")
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(response.status).toBe(204);
   });
 });

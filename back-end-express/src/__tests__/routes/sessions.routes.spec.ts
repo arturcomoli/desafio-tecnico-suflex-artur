@@ -48,7 +48,9 @@ describe("API route tests for users model", () => {
   });
 
   test("Should not be able to login with invalid credentials", async () => {
-    const response = await request(app).post("/login").send(mockUser);
+    const response = await request(app)
+      .post("/login")
+      .send({ name: mockUserCreation.name, password: "100" });
 
     expect(response.status).toBe(400);
 
