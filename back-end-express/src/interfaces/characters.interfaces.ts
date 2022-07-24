@@ -21,3 +21,7 @@ export interface ICharJSON {
 export interface ICharId {
   char_id: number;
 }
+
+export interface ICharDeletion extends ICharId {
+  id: string;
+}

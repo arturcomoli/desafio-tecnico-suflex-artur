@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import CreateCharacterService from "../services/characters/CreateCharacter.service";
+import DeleteCharacterService from "../services/characters/DeleteCharacter.service";
 import ListCharactersService from "../services/characters/ListCharacters.service";
 import RetrieveCharacterService from "../services/characters/RetrieveCharacter.service";
 export default class CharacterControllers {
@@ -58,5 +59,16 @@ export default class CharacterControllers {
     return res.status(200).json(char);
   }
   static async update(req: Request, res: Response) {}
-  static async delete(req: Request, res: Response) {}
+  static async delete(req: Request, res: Response) {
+    const deleteChar = new DeleteCharacterService();
+
+    const { id } = req.user;
+    const { char_id } = req.params;
+
+    const convertedId = Number(char_id);
+
+    await deleteChar.execute({ id, char_id: convertedId });
+
+    return res.status(204).json();
+  }
 }

@@ -124,14 +124,6 @@ describe("API route tests for users model", () => {
     expect(response.body.message).toEqual("Missing authorization token.");
   });
 
-  test("Should be able to delete own char when logged in", async () => {
-    const response = await request(app)
-      .delete(`/characters/${charId}`)
-      .set("Authorization", `Bearer ${userToken}`);
-
-    expect(response.status).toBe(204);
-  });
-
   test("Should not be able to delete other users char when logged in", async () => {
     await request(app).post("/users").send(mockUserCreation);
     const login = await request(app).post("/login").send(mockUserCreation);
@@ -144,7 +136,15 @@ describe("API route tests for users model", () => {
     expect(response.body).toHaveProperty("status");
     expect(response.body).toHaveProperty("message");
     expect(response.body.message).toEqual(
-      "You do not have permission for this action."
+      "You do not have permission to perform this action."
     );
+  });
+
+  test("Should be able to delete own char when logged in", async () => {
+    const response = await request(app)
+      .delete(`/characters/${charId}`)
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(response.status).toBe(204);
   });
 });
