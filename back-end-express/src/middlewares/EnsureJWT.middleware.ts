@@ -10,7 +10,7 @@ const ensureJWTMiddleware = (
   let jwtToken = req.headers.authorization;
 
   if (!jwtToken) {
-    throw new ApiError("Missing authorization token.", 404);
+    throw new ApiError("Missing authorization token.", 401);
   }
 
   try {

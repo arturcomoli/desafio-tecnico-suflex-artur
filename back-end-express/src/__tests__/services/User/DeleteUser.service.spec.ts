@@ -28,8 +28,8 @@ describe("User delete unit test", () => {
   test("Should be able to retrieve user data", async () => {
     const deleteUserService = new DeleteUserService();
 
-    const user = await deleteUserService.execute({ userId });
+    const user = await deleteUserService.execute({ id: userId });
 
-    expect(user).toBeFalsy();
+    expect(user).toBeTruthy();
   });
 });

@@ -28,14 +28,14 @@ describe("User retrieve unit test", () => {
   test("Should be able to retrieve user data", async () => {
     const retrieveUserService = new RetrieveUserService();
 
-    const user = await retrieveUserService.execute({ userId });
+    const user = await retrieveUserService.execute({ id: userId });
 
     expect(user).toBeTruthy();
 
     expect(user).toHaveProperty("id");
     expect(user).toHaveProperty("name");
-    expect(user).toHaveProperty("password");
     expect(user).toHaveProperty("created_at");
     expect(user).toHaveProperty("updated_at");
+    expect(user).toHaveProperty("password");
   });
 });
