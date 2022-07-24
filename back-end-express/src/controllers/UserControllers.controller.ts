@@ -1,6 +1,7 @@
 import { instanceToPlain } from "class-transformer";
 import { Request, response, Response } from "express";
 import CreateUserService from "../services/users/CreateUser.service";
+import DeleteUserService from "../services/users/DeleteUser.service";
 import ListUserService from "../services/users/ListUsers.service";
 import RetrieveUserService from "../services/users/RetrieveUser.service";
 import UpdateUserService from "../services/users/UpdateUser.service";
@@ -41,5 +42,13 @@ export default class UserControllers {
 
     return res.status(200).json(instanceToPlain(user));
   }
-  static async delete(req: Request, res: Response) {}
+  static async delete(req: Request, res: Response) {
+    const deleteUser = new DeleteUserService();
+
+    const { id } = req.user;
+
+    await deleteUser.execute({ id });
+
+    return res.status(204).json();
+  }
 }
