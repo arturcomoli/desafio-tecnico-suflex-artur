@@ -29,7 +29,10 @@ describe("User update unit test", () => {
   test("Should be able to update an existing user", async () => {
     const updateUserService = new UpdateUserService();
 
-    const updatedUser = await updateUserService.execute({ ...newData, userId });
+    const updatedUser = await updateUserService.execute({
+      id: userId,
+      ...newData,
+    });
 
     expect(updatedUser).toBeTruthy();
 
