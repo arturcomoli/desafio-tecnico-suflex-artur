@@ -17,3 +17,11 @@ export interface ICharJSON {
   name: string;
   url: string;
 }
+
+export interface ICharId {
+  char_id: number;
+}
+
+export interface ICharDeletion extends ICharId {
+  id: string;
+}

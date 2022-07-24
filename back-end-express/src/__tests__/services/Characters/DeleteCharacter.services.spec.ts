@@ -1,17 +1,15 @@
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 
-import * as uuid from "uuid";
 import { mockChar, mockUser } from "../../utils";
 import User from "../../../models/User";
 import Character from "../../../models/Character";
 import DeleteCharacterService from "../../../services/characters/DeleteCharacter.service";
-jest.mock("uuid");
 
-describe("User creation unit test", () => {
+describe("Char creation unit test", () => {
   let connection: DataSource;
-  let userId: string;
-  let charId: string;
+  let id: string;
+  let char_id: number;
 
   beforeAll(async () => {
     await AppDataSource.initialize()
@@ -24,23 +22,25 @@ describe("User creation unit test", () => {
     const user = userRepository.create(mockUser);
     await userRepository.save(user);
 
-    userId = user.id;
+    id = user.id;
 
     const charRepository = AppDataSource.getRepository(Character);
-    const char = charRepository.create({ ...mockChar, userId });
+    const char = charRepository.create({ ...mockChar, userId: id });
 
-    charId = char.id;
+    await charRepository.save(char);
+
+    char_id = char.id;
   });
 
   afterAll(async () => {
     await connection.destroy();
   });
 
-  test("Should be able to create a favorite character", async () => {
+  test("Should be able to delete a favorite character", async () => {
     const deleteChar = new DeleteCharacterService();
 
-    const char = await deleteChar.execute({ charId, userId });
+    const char = await deleteChar.execute({ id, char_id });
 
-    expect(char).toBeFalsy();
+    expect(char).toBeTruthy();
   });
 });

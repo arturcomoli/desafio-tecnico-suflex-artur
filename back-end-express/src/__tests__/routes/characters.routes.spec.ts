@@ -12,6 +12,8 @@ import {
 import User from "../../models/User";
 import Character from "../../models/Character";
 
+import * as bcrypt from "bcryptjs";
+
 describe("API route tests for users model", () => {
   let connection: DataSource;
   let userId: string;
@@ -25,19 +27,22 @@ describe("API route tests for users model", () => {
         console.error("Error during data source initialization", err)
       );
 
-    // const userRepository = AppDataSource.getRepository(User);
-    // const user = userRepository.create(mockUser);
-    // await userRepository.save(user);
+    const userRepository = AppDataSource.getRepository(User);
+    const user = userRepository.create({
+      ...mockUser,
+      password: await bcrypt.hash(mockUser.password, 10),
+    });
+    await userRepository.save(user);
 
-    // const charRepository = AppDataSource.getRepository(Character);
-    // const char = charRepository.create({ ...mockChar2, userId: user.id });
-    // await charRepository.save(char);
+    const charRepository = AppDataSource.getRepository(Character);
+    const char = charRepository.create({ ...mockChar2, userId: user.id });
+    await charRepository.save(char);
 
-    // const login = await request(app).post("/login").send(mockUser);
+    const login = await request(app).post("/login").send(mockUser);
 
-    // charId = char.id;
-    // userToken = login.body.token;
-    // userId = user.id;
+    charId = char.id;
+    userToken = login.body.token;
+    userId = user.id;
   });
 
   afterAll(async () => {
@@ -119,14 +124,6 @@ describe("API route tests for users model", () => {
     expect(response.body.message).toEqual("Missing authorization token.");
   });
 
-  test("Should be able to delete own char when logged in", async () => {
-    const response = await request(app)
-      .delete(`/characters/${charId}`)
-      .set("Authorization", `Bearer ${userToken}`);
-
-    expect(response.status).toBe(204);
-  });
-
   test("Should not be able to delete other users char when logged in", async () => {
     await request(app).post("/users").send(mockUserCreation);
     const login = await request(app).post("/login").send(mockUserCreation);
@@ -139,7 +136,15 @@ describe("API route tests for users model", () => {
     expect(response.body).toHaveProperty("status");
     expect(response.body).toHaveProperty("message");
     expect(response.body.message).toEqual(
-      "You do not have permission for this action."
+      "You do not have permission to perform this action."
     );
+  });
+
+  test("Should be able to delete own char when logged in", async () => {
+    const response = await request(app)
+      .delete(`/characters/${charId}`)
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(response.status).toBe(204);
   });
 });
