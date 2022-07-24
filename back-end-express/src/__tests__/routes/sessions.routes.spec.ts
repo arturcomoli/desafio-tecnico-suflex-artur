@@ -2,8 +2,9 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import request from "supertest";
 import app from "../../app";
-import { mockUser, mockUserCreation } from "../utils";
 import User from "../../models/User";
+import { mockUser, mockUserCreation } from "../utils";
+import * as bcrypt from "bcryptjs";
 
 describe("API route tests for users model", () => {
   let connection: DataSource;
@@ -16,11 +17,14 @@ describe("API route tests for users model", () => {
         console.error("Error during data source initialization", err)
       );
 
-    // const userRepository = AppDataSource.getRepository(User);
-    // const user = userRepository.create(mockUser);
-    // await userRepository.save(user);
+    const userRepository = AppDataSource.getRepository(User);
+    const user = userRepository.create({
+      ...mockUserCreation,
+      password: await bcrypt.hash(mockUserCreation.password, 10),
+    });
+    await userRepository.save(user);
 
-    // userId = user.id;
+    userId = user.id;
   });
 
   afterAll(async () => {
@@ -28,7 +32,7 @@ describe("API route tests for users model", () => {
   });
 
   test("Should be able to login with right credentials", async () => {
-    const response = await request(app).post("/login").send(mockUser);
+    const response = await request(app).post("/login").send(mockUserCreation);
 
     expect(response.status).toBe(200);
 
@@ -44,7 +48,7 @@ describe("API route tests for users model", () => {
   });
 
   test("Should not be able to login with invalid credentials", async () => {
-    const response = await request(app).post("/login").send(mockUserCreation);
+    const response = await request(app).post("/login").send(mockUser);
 
     expect(response.status).toBe(400);
 
