@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { IUserCreation } from "../interfaces/users.interfaces";
+import { IUserLogin } from "../interfaces/sessions.interfaces";
 
-export const userLoginSchema: SchemaOf<IUserCreation> = yup.object().shape({
+export const userLoginSchema: SchemaOf<IUserLogin> = yup.object().shape({
   name: yup.string().required("name is a required field"),
   password: yup.string().required("password is a required field"),
 });
 
 export const validateUserLogin =
-  (schema: SchemaOf<IUserCreation>) =>
+  (schema: SchemaOf<IUserLogin>) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = req.body;
