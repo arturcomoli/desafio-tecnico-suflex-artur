@@ -6,7 +6,7 @@ export const AppDataSource =
     ? new DataSource({
         type: "sqlite",
         database: ":memory:",
-        entities: ["src/entities/*.ts"],
+        entities: ["src/models/*.ts"],
         synchronize: true,
       })
     : new DataSource({
