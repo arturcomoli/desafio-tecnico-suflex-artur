@@ -9,20 +9,7 @@ export const AppDataSource =
         entities: ["src/models/*.ts"],
         synchronize: true,
       })
-    : // ?  new DataSource({
-      //     type: "postgres",
-      //     host: "localhost",
-      //     database: "test_database",
-      //     username: process.env.POSTGRES_USER,
-      //     password: process.env.POSTGRES_PASSWORD,
-      //     port: 5432,
-      //     entities: ["src/models/*.ts"],
-      //     // migrations: ["src/migrations/*.ts"],
-      //     synchronize: true,
-      //     dropSchema: true,
-      //     // migrationsRun: true,
-      //   })
-      new DataSource({
+    : new DataSource({
         type: "postgres",
         host: "localhost",
         url: process.env.DATABASE_URL,

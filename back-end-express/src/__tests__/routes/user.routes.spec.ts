@@ -17,14 +17,14 @@ describe("API route tests for users model", () => {
         console.error("Error during data source initialization", err)
       );
 
-    const userRepository = AppDataSource.getRepository(User);
-    const user = userRepository.create(mockUser);
-    await userRepository.save(user);
+    // const userRepository = AppDataSource.getRepository(User);
+    // const user = userRepository.create(mockUser);
+    // await userRepository.save(user);
 
-    const login = await request(app).post("/login").send(mockUser);
+    // const login = await request(app).post("/login").send(mockUser);
 
-    userToken = login.body.token;
-    userId = user.id;
+    // userToken = login.body.token;
+    // userId = user.id;
   });
 
   afterAll(async () => {

@@ -5,7 +5,7 @@ import CreateCharacterService from "../../../services/characters/CreateCharacter
 
 import { mockChar, mockUser } from "../../utils";
 
-describe("User creation unit test", () => {
+describe("Character creation unit test", () => {
   let connection: DataSource;
   let userId: string;
 
