@@ -45,7 +45,7 @@ export const mockChar2 = {
 
 export const mockUser = {
   name: "mock",
-  password: "password",
+  password: "password123",
 };
 
 export const mockUserService = {

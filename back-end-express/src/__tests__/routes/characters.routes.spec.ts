@@ -59,7 +59,7 @@ describe("API route tests for users model", () => {
     expect(response.body.message).toEqual("Missing authorization token.");
   });
 
-  test("Should be able to create a char whe logged", async () => {
+  test("Should be able to create a char when logged", async () => {
     const response = await request(app)
       .post("/characters")
       .set("Authorization", `Bearer ${userToken}`)
@@ -100,6 +100,60 @@ describe("API route tests for users model", () => {
     expect(response.body.message).toEqual(
       "You already have this character in your list!"
     );
+  });
+
+  test("Should not be able to retrieve data from one favorite char when not logged", async () => {
+    const response = await request(app).get(`/characters/${charId}`);
+
+    expect(response.status).toBe(401);
+
+    expect(response.body).toHaveProperty("status");
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.message).toEqual("Missing authorization token.");
+  });
+
+  test("Should not be able to retrieve an unexisting char", async () => {
+    const response = await request(app)
+      .get(`/characters/${651651}`)
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(response.status).toBe(404);
+
+    expect(response.body).toHaveProperty("status");
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.message).toEqual("character not found.");
+  });
+
+  test("Should be able to retrieve a char data when logged", async () => {
+    const response = await request(app)
+      .get(`/characters/${charId}`)
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(response.status).toBe(200);
+
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("name");
+    expect(response.body).toHaveProperty("status");
+    expect(response.body).toHaveProperty("species");
+    expect(response.body).toHaveProperty("type");
+    expect(response.body).toHaveProperty("gender");
+    expect(response.body).toHaveProperty("origin");
+    expect(response.body).toHaveProperty("location");
+    expect(response.body).toHaveProperty("image");
+    expect(response.body).toHaveProperty("episode");
+    expect(response.body).toHaveProperty("url");
+    expect(response.body).toHaveProperty("created");
+    expect(response.body).toHaveProperty("userId");
+  });
+
+  test("Should be able to list all chars", async () => {
+    const response = await request(app)
+      .get(`/characters/all`)
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(response.status).toBe(200);
+
+    expect(response.body).toHaveProperty("map");
   });
 
   test("Should not be able to create a char without the data", async () => {
@@ -146,5 +200,16 @@ describe("API route tests for users model", () => {
       .set("Authorization", `Bearer ${userToken}`);
 
     expect(response.status).toBe(204);
+  });
+
+  test("Should not be able to delete an inexistent char", async () => {
+    const response = await request(app)
+      .delete(`/characters/${16516}`)
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty("status");
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.message).toEqual("character not found");
   });
 });

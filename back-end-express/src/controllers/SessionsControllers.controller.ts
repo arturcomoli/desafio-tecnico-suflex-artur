@@ -11,8 +11,4 @@ export default class SessionsControllers {
 
     return res.status(200).json(instanceToPlain(login));
   }
-  static async index(req: Request, res: Response) {}
-  static async show(req: Request, res: Response) {}
-  static async update(req: Request, res: Response) {}
-  static async delete(req: Request, res: Response) {}
 }

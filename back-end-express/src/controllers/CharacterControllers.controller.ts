@@ -58,7 +58,6 @@ export default class CharacterControllers {
 
     return res.status(200).json(char);
   }
-  static async update(req: Request, res: Response) {}
   static async delete(req: Request, res: Response) {
     const deleteChar = new DeleteCharacterService();
 
