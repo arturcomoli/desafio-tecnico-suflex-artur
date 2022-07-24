@@ -4,6 +4,6 @@ import CharacterControllers from "../controllers/CharacterControllers.controller
 const characterRouter = Router();
 
 characterRouter.post("/", CharacterControllers.store);
-characterRouter.get("/", CharacterControllers.index);
+characterRouter.get("/all", CharacterControllers.index);
 
 export default characterRouter;

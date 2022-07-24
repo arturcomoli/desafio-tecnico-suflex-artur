@@ -2,7 +2,7 @@ import "reflect-metadata";
 import express from "express";
 import "express-async-errors";
 import "dotenv/config";
-import ErrorHandlingMiddleware from "./middlewares/ErrorHandling.midleware";
+import ErrorHandlingMiddleware from "./middlewares/ErrorHandling.middleware";
 
 import routes from "./routes";
 
