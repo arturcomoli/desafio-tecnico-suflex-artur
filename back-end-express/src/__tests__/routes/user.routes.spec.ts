@@ -72,6 +72,21 @@ describe("API route tests for users model", () => {
     expect(response.body.message).toEqual("Missing authorization token.");
   });
 
+  test("Should not be able do update to an existing name in the db", async () => {
+    const response = await request(app)
+      .patch("/users")
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({ name: mockUser.name });
+
+    expect(response.status).toBe(400);
+
+    expect(response.body).toHaveProperty("status");
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.message).toEqual(
+      "invalid name, please try a different one."
+    );
+  });
+
   test("Should be able do update a user when logged", async () => {
     const response = await request(app)
       .patch("/users")
