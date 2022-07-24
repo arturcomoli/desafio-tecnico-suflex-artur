@@ -12,6 +12,8 @@ import {
 import User from "../../models/User";
 import Character from "../../models/Character";
 
+import * as bcrypt from "bcryptjs";
+
 describe("API route tests for users model", () => {
   let connection: DataSource;
   let userId: string;
@@ -25,19 +27,22 @@ describe("API route tests for users model", () => {
         console.error("Error during data source initialization", err)
       );
 
-    // const userRepository = AppDataSource.getRepository(User);
-    // const user = userRepository.create(mockUser);
-    // await userRepository.save(user);
+    const userRepository = AppDataSource.getRepository(User);
+    const user = userRepository.create({
+      ...mockUser,
+      password: await bcrypt.hash(mockUser.password, 10),
+    });
+    await userRepository.save(user);
 
-    // const charRepository = AppDataSource.getRepository(Character);
-    // const char = charRepository.create({ ...mockChar2, userId: user.id });
-    // await charRepository.save(char);
+    const charRepository = AppDataSource.getRepository(Character);
+    const char = charRepository.create({ ...mockChar2, userId: user.id });
+    await charRepository.save(char);
 
-    // const login = await request(app).post("/login").send(mockUser);
+    const login = await request(app).post("/login").send(mockUser);
 
-    // charId = char.id;
-    // userToken = login.body.token;
-    // userId = user.id;
+    charId = char.id;
+    userToken = login.body.token;
+    userId = user.id;
   });
 
   afterAll(async () => {
