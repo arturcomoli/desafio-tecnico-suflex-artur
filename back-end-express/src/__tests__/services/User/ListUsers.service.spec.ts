@@ -1,13 +1,13 @@
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import User from "../../../models/User";
-import ListUserService from "../../../services/users/ListUser.service";
+import ListUserService from "../../../services/users/ListUsers.service";
 import RetrieveUserService from "../../../services/users/RetrieveUser.service";
 import { mockUser } from "../../utils";
 
 describe("User retrieve unit test", () => {
   let connection: DataSource;
-  let usersArr: User[];
+  let usersArr: User[] = [];
 
   beforeAll(async () => {
     await AppDataSource.initialize()

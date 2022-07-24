@@ -4,6 +4,7 @@ import request from "supertest";
 import app from "../../app";
 import { mockUser, mockUserCreation, newData } from "../utils";
 import User from "../../models/User";
+import * as bcrypt from "bcryptjs";
 
 describe("API route tests for users model", () => {
   let connection: DataSource;
@@ -17,14 +18,17 @@ describe("API route tests for users model", () => {
         console.error("Error during data source initialization", err)
       );
 
-    // const userRepository = AppDataSource.getRepository(User);
-    // const user = userRepository.create(mockUser);
-    // await userRepository.save(user);
+    const userRepository = AppDataSource.getRepository(User);
+    const user = userRepository.create({
+      ...mockUser,
+      password: await bcrypt.hash(mockUser.password, 10),
+    });
+    await userRepository.save(user);
 
-    // const login = await request(app).post("/login").send(mockUser);
+    const login = await request(app).post("/login").send(mockUser);
 
-    // userToken = login.body.token;
-    // userId = user.id;
+    userToken = login.body.token;
+    userId = user.id;
   });
 
   afterAll(async () => {
@@ -127,6 +131,22 @@ describe("API route tests for users model", () => {
     expect(response.body).toHaveProperty("status");
     expect(response.body).toHaveProperty("message");
     expect(response.body.message).toEqual("Missing authorization token.");
+  });
+
+  test("Should be able to retrieve logged user data", async () => {
+    const response = await request(app)
+      .get("/users")
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(response.status).toBe(200);
+
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("name");
+    expect(response.body).toHaveProperty("created_at");
+    expect(response.body).toHaveProperty("updated_at");
+    expect(response.body).toHaveProperty("favorite_characters");
+
+    expect(response.body.id).toEqual(userId);
   });
 
   test("Should be able do update a user when logged", async () => {
