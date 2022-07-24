@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { ICharJSON } from "../interfaces/characters.intertfaces";
+import { ICharJSON } from "../interfaces/characters.interfaces";
 import User from "./User";
 
 @Entity("characters")
@@ -22,10 +22,10 @@ class Character {
   @Column()
   gender: string;
 
-  @Column("text")
+  @Column("simple-json")
   origin: ICharJSON;
 
-  @Column("text")
+  @Column("simple-json")
   location: ICharJSON;
 
   @Column()
@@ -39,6 +39,9 @@ class Character {
 
   @Column()
   created: Date;
+
+  @Column()
+  userId: string;
 
   @ManyToOne(() => User)
   user: User;

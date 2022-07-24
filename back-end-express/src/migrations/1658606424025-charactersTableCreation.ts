@@ -40,12 +40,12 @@ export class charactersTableCreation1658606424025
           },
           {
             name: "origin",
-            type: "text",
+            type: "jsonb",
             isNullable: true,
           },
           {
             name: "location",
-            type: "text",
+            type: "jsonb",
             isNullable: true,
           },
           {

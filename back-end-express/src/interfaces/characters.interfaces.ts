@@ -10,6 +10,7 @@ export interface ICharacterCreation {
   episode: string[];
   url: string;
   created: string;
+  userId: string;
 }
 
 export interface ICharJSON {

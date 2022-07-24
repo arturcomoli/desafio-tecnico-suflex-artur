@@ -4,9 +4,9 @@ import CreateUserService from "../services/users/CreateUser.service";
 
 export default class UserControllers {
   static async store(req: Request, res: Response) {
-    const { name, password } = req.validUser;
-
     const createUser = new CreateUserService();
+
+    const { name, password } = req.validUser;
 
     const user = await createUser.execute({ name, password });
 
