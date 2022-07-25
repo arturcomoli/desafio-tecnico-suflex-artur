@@ -10,6 +10,9 @@ services:
       - POSTGRES_DB=desafio_suflex
     ports:
       - 5435:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    tty: true
     networks:
       - apiwebnetwork
 
@@ -21,16 +24,31 @@ services:
       - 8000:8000
     depends_on:
       - db_desafio_suflex
+      # - migrations
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db_desafio_suflex:5432/desafio_suflex
       - PORT=8000
-    command: bash -c 'while !</dev/tcp/db_desafio_suflex/5432; do sleep 1; done; npm run dev'
+    command: bash -c 'while !</dev/tcp/db_desafio_suflex/5432; do sleep 1; done;npm run migrate && npm run dev'
     volumes:
       - ./back-end-express:/backend
       - ./back-end-express/src:/backend/src
       - ./back-end-express/nodemon.json:/backend/nodemon.json
     networks:
       - apiwebnetwork
+
+  # migrations:
+  #   build: ./back-end-express
+  #   environment:
+  #     - DATABASE_URL=postgres://postgres:postgres@db_desafio_suflex:5432/desafio_suflex
+  #   command: bash -c 'while !</dev/tcp/db_desafio_suflex/5432; do sleep; done; npm run migrate'
+  #   volumes:
+  #     - .:/backend
+  #   depends_on:
+  #     - db_desafio_suflex
+  #   links:
+  #     - db_desafio_suflex
+  #   networks:
+  #     - apiwebnetwork
 
   front-end:
     container_name: front-ent-vite
@@ -48,3 +66,6 @@ services:
 networks:
   apiwebnetwork:
     driver: bridge
+
+volumes:
+  pgdata:
