@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "",
+export const api = axios.create({
+  baseURL: "http://localhost:8000",
 });
 
-export default api;
+export const charApi = axios.create({
+  baseURL: "https://rickandmortyapi.com/api",
+});

@@ -23,7 +23,7 @@ const CharCard = () => {
         <Button>Infos</Button>
         <AiFillStar className="cursor-pointer  text-3xl text-yellow-500 transition-all duration-500 hover:text-4xl" />
       </div>
-      <InfoModal open={true} />
+      <InfoModal open={false} />
     </li>
   );
 };
