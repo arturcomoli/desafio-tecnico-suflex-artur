@@ -1,9 +1,11 @@
-const Button = ({ ...props }) => {
+import { ButtonProps } from "./interfaces";
+
+const Button = ({ mt, ...props }: ButtonProps) => {
   return (
     <button
-      className="bg-purple-500 rounded-md py-2 
-    text-white font-medium transition-all duration-500
-      hover:bg-purple-900 active:bg-purple-300"
+      className={`bg-btn-orange rounded-md py-2 
+      text-blue-txt font-medium transition-all duration-500
+        hover:brightness-125 active:bg-purple-300 mt-${mt}`}
       {...props}
     />
   );
