@@ -14,6 +14,9 @@ module.exports = {
         "green-txt": "#9ABF4B",
         "pholder-blue": "#04ADBF",
       },
+      spacing: {
+        "w-1/10": "10%",
+      },
     },
   },
   plugins: [],
