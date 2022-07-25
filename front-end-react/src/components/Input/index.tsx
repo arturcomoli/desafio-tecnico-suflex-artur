@@ -1,6 +1,12 @@
 import { InputProps } from "./interfaces";
 
-const Input = ({ label, error, ...props }: InputProps) => {
+const Input: React.FC<InputProps> = ({
+  name,
+  register,
+  label,
+  error,
+  ...props
+}: InputProps) => {
   return (
     <div className="flex flex-col gap-y-1">
       <label className="text-lg text-blue-txt">{label}</label>
@@ -9,6 +15,8 @@ const Input = ({ label, error, ...props }: InputProps) => {
         className="outline-none p-2 rounded-md bg-gray-300 
         transition-all duration-500 opacity-100 hover:opacity-50 
         border-2 focus:border-btn-orange placeholder-pholder-blue text-purple-txt"
+        name={name}
+        {...register(name)}
         {...props}
       />
       {error && <span className="text-xs text-err-warning">{error}</span>}
