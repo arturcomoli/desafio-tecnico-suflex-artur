@@ -2,6 +2,7 @@ import { AiFillStar } from "react-icons/ai";
 import Button from "../Button";
 
 import rick_morty from "../../assets/rick_morty.jpeg";
+import InfoModal from "../InfoModal";
 
 const CharCard = () => {
   return (
@@ -22,6 +23,7 @@ const CharCard = () => {
         <Button>Infos</Button>
         <AiFillStar className="cursor-pointer  text-3xl text-yellow-500 transition-all duration-500 hover:text-4xl" />
       </div>
+      <InfoModal open={true} />
     </li>
   );
 };
