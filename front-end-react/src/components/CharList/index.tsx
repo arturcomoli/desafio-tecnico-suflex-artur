@@ -5,7 +5,7 @@ import Button from "../Button";
 import CharCard from "../CharCard";
 import { IDeleteChar } from "../CharCard/interfaces";
 
-const CharList = ({ toDelete, handleUpdate, chars }: IDeleteChar) => {
+const CharList = ({ toDelete, chars }: IDeleteChar) => {
   const [page, setPage] = useState<number>(1);
   const { maxPages, retrieveCharsHome } = useChars();
 
@@ -28,12 +28,7 @@ const CharList = ({ toDelete, handleUpdate, chars }: IDeleteChar) => {
       lg:flex-wrap gap-y-5 lg:justify-center"
       >
         {chars?.map((data: ICharRetrieve) => (
-          <CharCard
-            key={data.id}
-            data={data}
-            toDelete={toDelete}
-            handleUpdate={handleUpdate}
-          />
+          <CharCard key={data.id} data={data} toDelete={toDelete} />
         ))}
       </ul>
       <div className="w-full flex justify-around">
