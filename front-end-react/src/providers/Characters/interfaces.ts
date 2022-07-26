@@ -8,10 +8,12 @@ export interface CharProviderProps {
 export interface CharProviderData {
   chars: ICharRetrieve[];
   favChars: ICharRetrieve[];
+  filteredChars: ICharRetrieve[];
   owner: string;
   maxPages: number;
   update: boolean;
-  filterChars: ({ page, name, species }: ICharFilter) => void;
+  filterChars: ({ filterPage, name, species }: ICharFilter) => void;
+  cleanFilters: () => void;
   handleUpdate: () => void;
   retrieveCharsHome: (page: number) => void;
   addFavoriteChars: (data: ICharData, token: string) => void;
@@ -20,7 +22,7 @@ export interface CharProviderData {
 }
 
 export interface ICharFilter {
-  page: number;
+  filterPage: number;
   name: string;
   species: string;
 }

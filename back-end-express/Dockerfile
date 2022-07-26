@@ -1,12 +1,12 @@
 FROM node:16
 
-WORKDIR /backend
+WORKDIR /back-end-express
 
-COPY package*.json ./
+COPY package*.json /back-end-express/
 
 RUN npm install --force
 
-COPY . .
+COPY . ./back-end-express
 
 EXPOSE 8000
 

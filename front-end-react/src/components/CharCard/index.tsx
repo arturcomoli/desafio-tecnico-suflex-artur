@@ -32,7 +32,7 @@ const CharCard = ({ data, toDelete }: ICharCard) => {
   return (
     <li
       className="flex flex-col items-center bg-background-card
-      min-w-[265px] w-[90vw] max-w-80 px-9 py-5 mr-5 gap-y-5 lg:w-[20vw]
+      min-w-[265px] w-[90vw] max-w-sm px-9 py-5 gap-y-5 lg:w-[20vw]
       shadow-lg rounded-md"
     >
       <h3

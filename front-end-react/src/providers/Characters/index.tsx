@@ -9,6 +9,7 @@ const CharContext = createContext<CharProviderData>({} as CharProviderData);
 export const CharactersProvider = ({ children }: CharProviderProps) => {
   const [chars, setChars] = useState<[]>([]);
   const [favChars, setFavChars] = useState<[]>([]);
+  const [filteredChars, setFilteredChars] = useState<[]>([]);
   const [maxPages, setMaxPages] = useState<number>(0);
   const [owner, setOwner] = useState<string>("");
   const [update, setUpdate] = useState<boolean>(false);
@@ -17,14 +18,23 @@ export const CharactersProvider = ({ children }: CharProviderProps) => {
     setUpdate(!update);
   };
 
-  const filterChars = ({ page, name, species }: ICharFilter) => {
+  const filterChars = ({ filterPage, name, species }: ICharFilter) => {
     charApi
-      .get(`/character/?page=${page}/?name=${name}&species=${species}`)
+      .get(`/character/?page=${filterPage}&name=${name}&species=${species}`)
       .then((res) => {
-        setChars(res.data.results);
+        setFilteredChars(res.data.results);
         return setMaxPages(res.data.info.pages);
       })
-      .catch((_) => toast.error("Ops, algo deu errado com a requisição"));
+      .catch((_) => {
+        setFilteredChars([]);
+        toast.error(
+          "Ops, não existem personagens com os filtros selecionados!"
+        );
+      });
+  };
+
+  const cleanFilters = () => {
+    setFilteredChars([]);
   };
 
   const retrieveCharsHome = (page: number) => {
@@ -106,6 +116,8 @@ export const CharactersProvider = ({ children }: CharProviderProps) => {
         chars,
         maxPages,
         filterChars,
+        filteredChars,
+        cleanFilters,
         retrieveCharsHome,
         retrieveFavoriteChars,
         addFavoriteChars,
