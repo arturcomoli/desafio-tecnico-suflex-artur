@@ -56,6 +56,7 @@ const CharCard = ({ data, toDelete }: ICharCard) => {
             className="cursor-pointer  text-3xl text-yellow-500
          transition-all duration-500 hover:text-4xl"
             onClick={addFavorite}
+            id="add-char"
           />
         )}
       </div>
