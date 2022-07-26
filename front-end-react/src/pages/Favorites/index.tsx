@@ -21,7 +21,7 @@ const Favorites = () => {
           Lista de personagens favoritos de: {owner}
         </h2>
         {!favChars.length ? (
-          <p className="my-10 text-center text-2xl text-err-warning">
+          <p className="my-28 text-center text-2xl text-err-warning">
             Ops... Você não possui nenhum personagem favorito! Volte à página
             inicial e faça a sua coleção!!!
           </p>

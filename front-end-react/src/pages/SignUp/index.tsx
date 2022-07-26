@@ -79,8 +79,14 @@ const SignUp = () => {
           </Button>
           <p className="text-center text-sm text-blue-txt">
             Já possui uma conta?{" "}
-            <Link to="/" className="font-bold hover:underline">
+            <Link to="/login" className="font-bold hover:underline">
               Efetue o login!
+            </Link>
+          </p>
+          <p className="text-center text-sm text-blue-txt">
+            Visite a aplicação!{" "}
+            <Link to="/" className="font-bold hover:underline">
+              Ir para a homepage
             </Link>
           </p>
         </form>

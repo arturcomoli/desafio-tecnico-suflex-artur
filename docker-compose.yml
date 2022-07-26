@@ -24,31 +24,18 @@ services:
       - 8000:8000
     depends_on:
       - db_desafio_suflex
-      # - migrations
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db_desafio_suflex:5432/desafio_suflex
       - PORT=8000
     command: bash -c 'while !</dev/tcp/db_desafio_suflex/5432; do sleep 1; done;npm run migrate && npm run dev'
     volumes:
-      - ./back-end-express:/backend
-      - ./back-end-express/src:/backend/src
-      - ./back-end-express/nodemon.json:/backend/nodemon.json
+      # - ./back-end-express:/backend
+      - ./back-end-express:/back-end-express
+      - /back-end-express/node_modules
+      - ./back-end-express/src:/back-end-express/src
+      - ./back-end-express/nodemon.json:/back-end-express/nodemon.json
     networks:
       - apiwebnetwork
-
-  # migrations:
-  #   build: ./back-end-express
-  #   environment:
-  #     - DATABASE_URL=postgres://postgres:postgres@db_desafio_suflex:5432/desafio_suflex
-  #   command: bash -c 'while !</dev/tcp/db_desafio_suflex/5432; do sleep; done; npm run migrate'
-  #   volumes:
-  #     - .:/backend
-  #   depends_on:
-  #     - db_desafio_suflex
-  #   links:
-  #     - db_desafio_suflex
-  #   networks:
-  #     - apiwebnetwork
 
   front-end:
     container_name: front-ent-vite
@@ -57,7 +44,8 @@ services:
       - 3000:3000
     restart: always
     volumes:
-      - ./front-end-react:/frontend
+      - ./front-end-react:/front-end-react/
+      - /front-end-react/node_modules
     links:
       - api
     networks:
