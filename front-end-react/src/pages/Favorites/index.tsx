@@ -5,11 +5,15 @@ import { useAuth } from "../../providers/Authentication";
 import { useChars } from "../../providers/Characters";
 
 const Favorites = () => {
-  const { favChars, retrieveFavoriteChars, owner, update } = useChars();
+  const { favChars, retrieveFavoriteChars, owner, update, setFilteredChars } =
+    useChars();
 
   const { authToken } = useAuth();
 
+  console.log(favChars);
+
   useEffect(() => {
+    setFilteredChars([]);
     retrieveFavoriteChars(authToken);
   }, [update]);
 

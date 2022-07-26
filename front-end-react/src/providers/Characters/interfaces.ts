@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import { ICharData, ICharRetrieve } from "../../pages/interfaces";
 
 export interface CharProviderProps {
@@ -19,6 +19,7 @@ export interface CharProviderData {
   addFavoriteChars: (data: ICharData, token: string) => void;
   retrieveFavoriteChars: (token: string) => void;
   deleteFavoriteChar: (token: string, id: number) => void;
+  setFilteredChars: Dispatch<SetStateAction<[]>>;
 }
 
 export interface ICharFilter {

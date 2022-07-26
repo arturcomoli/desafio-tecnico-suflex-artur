@@ -126,6 +126,7 @@ export const CharactersProvider = ({ children }: CharProviderProps) => {
         favChars,
         update,
         handleUpdate,
+        setFilteredChars,
       }}
     >
       {children}
