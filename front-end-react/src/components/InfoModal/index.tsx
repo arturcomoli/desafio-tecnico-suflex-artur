@@ -28,6 +28,7 @@ const InfoModal = ({
             className="float-right text-2xl cursor-pointer transition-all duration-500
              text-red-400 hover:text-red-300"
             onClick={handleModal}
+            id="close"
           />
         </div>
         <h3
@@ -48,6 +49,7 @@ const InfoModal = ({
             className="cursor-pointer  text-3xl text-yellow-500
          transition-all duration-500 hover:text-4xl"
             onClick={addFavorite}
+            id="add-char"
           />
         )}
 
