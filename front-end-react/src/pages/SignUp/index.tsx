@@ -6,8 +6,11 @@ import { Link } from "react-router-dom";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { ISignUpData } from "./interfaces";
+import { useAuth } from "../../providers/Authentication";
 
 const SignUp = () => {
+  const { registerUser } = useAuth();
+
   const signUpSchema = yup.object().shape({
     name: yup
       .string()
@@ -31,7 +34,7 @@ const SignUp = () => {
 
   const handleSignUp = (data: ISignUpData) => {
     delete data.confirm_password;
-    console.log(data);
+    registerUser(data);
   };
 
   return (
