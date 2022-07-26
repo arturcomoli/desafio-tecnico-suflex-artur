@@ -6,8 +6,11 @@ import { Link } from "react-router-dom";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { ILoginData } from "./interfaces";
+import { useAuth } from "../../providers/Authentication";
 
 const Login = () => {
+  const { loginUser } = useAuth();
+
   const loginSchema = yup.object().shape({
     name: yup
       .string()
@@ -26,7 +29,7 @@ const Login = () => {
   } = useForm<ILoginData>({ resolver: yupResolver(loginSchema) });
 
   const handleLogin = (data: ILoginData) => {
-    console.log(data);
+    loginUser(data);
   };
 
   return (

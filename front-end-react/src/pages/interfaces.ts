@@ -12,6 +12,10 @@ export interface ICharData {
   created: string;
 }
 
+export interface ICharRetrieve extends ICharData {
+  id: number;
+}
+
 interface JSONChar {
   name: string;
   url: string;

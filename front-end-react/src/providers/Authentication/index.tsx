@@ -44,7 +44,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logoutUser = () => {
     localStorage.clear();
     setAuthToken("");
-
     handleNavigate(navigate, "/login");
   };
 
