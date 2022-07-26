@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import { ILoginData } from "./interfaces";
+import { ISignUpData } from "./interfaces";
 import { useAuth } from "../../providers/Authentication";
 
-const Login = () => {
-  const { loginUser } = useAuth();
+const SignUp = () => {
+  const { registerUser } = useAuth();
 
-  const loginSchema = yup.object().shape({
+  const signUpSchema = yup.object().shape({
     name: yup
       .string()
       .min(3, "Mínimo de 3 (três) letras")
@@ -20,28 +20,33 @@ const Login = () => {
       .string()
       .min(6, "Mínimo de 6 caracteres")
       .required("Campo obrigatório"),
+    confirm_password: yup
+      .string()
+      .required("Campo obrigatório")
+      .oneOf([yup.ref("password")], "As senhas não são idênticas"),
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILoginData>({ resolver: yupResolver(loginSchema) });
+  } = useForm<ISignUpData>({ resolver: yupResolver(signUpSchema) });
 
-  const handleLogin = (data: ILoginData) => {
-    loginUser(data);
+  const handleSignUp = (data: ISignUpData) => {
+    delete data.confirm_password;
+    registerUser(data);
   };
 
   return (
     <main className="w-full h-screen">
       <div
         className="w-full h-screen flex ;
-        justify-center items-center flex-col"
+    justify-center items-center flex-col"
       >
         <form
           className="flex flex-col gap-y-3 
-          p-5 w-11/12 max-w-md rounded-2xl bg-bg-aqua"
-          onSubmit={handleSubmit(handleLogin)}
+      p-5 w-11/12 max-w-md rounded-2xl bg-bg-aqua"
+          onSubmit={handleSubmit(handleSignUp)}
         >
           <h2 className="text-center text-2xl text-blue-txt">
             Seja bem vindo(a)!
@@ -56,18 +61,26 @@ const Login = () => {
           <Input
             label="Senha"
             placeholder="Digite a sua senha"
-            type="password"
             error={errors.password?.message}
+            type="password"
             name="password"
             register={register}
           />
+          <Input
+            label="Confirme sua senha"
+            placeholder="Digite a sua senha novamente"
+            type="password"
+            error={errors.confirm_password?.message}
+            name="confirm_password"
+            register={register}
+          />
           <Button type="submit" mt={5}>
-            Logar!
+            Cadastrar!
           </Button>
           <p className="text-center text-sm text-blue-txt">
-            Ainda não possui uma conta?{" "}
-            <Link to="/cadastro" className="font-bold hover:underline">
-              Cadastre-se
+            Já possui uma conta?{" "}
+            <Link to="/" className="font-bold hover:underline">
+              Efetue o login!
             </Link>
           </p>
         </form>
@@ -75,4 +88,4 @@ const Login = () => {
     </main>
   );
 };
-export default Login;
+export default SignUp;
