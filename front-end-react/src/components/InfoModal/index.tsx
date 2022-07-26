@@ -32,7 +32,7 @@ const InfoModal = ({
         </div>
         <h3
           className="font-semibold text-3xl text-btn-orange break-words
-        truncate w-full"
+        truncate w-full text-center"
         >
           {data.name}
         </h3>

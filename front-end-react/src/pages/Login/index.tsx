@@ -70,6 +70,12 @@ const Login = () => {
               Cadastre-se
             </Link>
           </p>
+          <p className="text-center text-sm text-blue-txt">
+            Visite a aplicação!{" "}
+            <Link to="/" className="font-bold hover:underline">
+              Ir para a homepage
+            </Link>
+          </p>
         </form>
       </div>
     </main>
