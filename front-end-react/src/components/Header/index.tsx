@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { RiLoginBoxFill } from "react-icons/ri";
+import { motion } from "framer-motion";
 
 import boss from "../../assets/boss.jpg";
 import { useAuth } from "../../providers/Authentication";
@@ -18,7 +18,16 @@ const Header = ({ path, text }: IHeaderProps) => {
   };
 
   return (
-    <header
+    <motion.header
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      transition={{
+        duration: 1,
+      }}
       className="w-full py-5 px-5 lg:px-40 h-25 bg-bg-aqua 
         flex items-center justify-around lg:justify-between shadow-md"
     >
@@ -29,7 +38,7 @@ const Header = ({ path, text }: IHeaderProps) => {
       <Button onClick={handleAuthHeader}>
         {authToken ? "Logout" : "Login"}
       </Button>
-    </header>
+    </motion.header>
   );
 };
 export default Header;
