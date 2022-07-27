@@ -1,4 +1,10 @@
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { FaSearch } from "react-icons/fa";
 import Button from "../Button";
 import { useChars } from "../../providers/Characters";
@@ -49,7 +55,8 @@ const SearchInput = ({ filterPage, setFilterPage }: ISearchInput) => {
     [name]
   );
 
-  const searchChars = () => {
+  const searchChars = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     filterChars({ filterPage, name, species });
   };
 
@@ -74,20 +81,21 @@ const SearchInput = ({ filterPage, setFilterPage }: ISearchInput) => {
 
   return (
     <aside className="w-full flex flex-col md:flex-row gap-5 items-center justify-center">
-      <div
+      <form
         className="flex items-center bg-bg-aqua p-2 rounded-md border-2 border-transparent
      focus-within:border-btn-orange transition-colors duration-500"
+        onSubmit={searchChars}
       >
         <input
           className="bg-transparent flex-1 outline-none text-blue-txt text-lg"
           onChange={changeEventName}
         />
         <FaSearch
+          type="submit"
           className="cursor-pointer text-xl text-btn-orange hover:brightness-125 
       transition-all duration-500"
-          onClick={searchChars}
         />
-      </div>
+      </form>
       <div className="flex w-4/5 sm:w-1/2 justify-around ">
         <div className="group flex flex-col">
           <input
@@ -97,8 +105,11 @@ const SearchInput = ({ filterPage, setFilterPage }: ISearchInput) => {
             value="human"
             checked={checkedHuman}
             onChange={changeEventHuman}
+            className="cursor-pointer"
           />
-          <label htmlFor="human">Humanos</label>
+          <label className="cursor-pointer" htmlFor="human">
+            Humanos
+          </label>
         </div>
         <div className="group flex flex-col">
           <input
@@ -108,8 +119,11 @@ const SearchInput = ({ filterPage, setFilterPage }: ISearchInput) => {
             value="alien"
             checked={checkedAlien}
             onChange={changeEventAlien}
+            className="cursor-pointer"
           />
-          <label htmlFor="alien">Aliens</label>
+          <label className="cursor-pointer" htmlFor="alien">
+            Aliens
+          </label>
         </div>
         <Button onClick={allChars}>Mostrar todos</Button>
       </div>
