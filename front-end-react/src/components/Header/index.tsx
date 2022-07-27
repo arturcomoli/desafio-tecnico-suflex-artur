@@ -43,7 +43,7 @@ const Header = ({ path, text, disabled }: IHeaderProps) => {
         </Button>
         {!authToken && (
           <p
-            className="invisible group-hover:visible text-blue-txt 
+            className="hidden group-hover:block text-blue-txt 
             transition-all duration-300 text-center"
           >
             Disponível após o login!
