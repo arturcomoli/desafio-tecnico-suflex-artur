@@ -88,13 +88,15 @@ const SearchInput = ({ filterPage, setFilterPage }: ISearchInput) => {
       >
         <input
           className="bg-transparent flex-1 outline-none text-blue-txt text-lg"
+          value={name}
           onChange={changeEventName}
         />
-        <FaSearch
-          type="submit"
-          className="cursor-pointer text-xl text-btn-orange hover:brightness-125 
+        <button type="submit">
+          <FaSearch
+            className="cursor-pointer text-xl text-btn-orange hover:brightness-125 
       transition-all duration-500"
-        />
+          />
+        </button>
       </form>
       <div className="flex w-4/5 sm:w-1/2 justify-around ">
         <div className="group flex flex-col">
