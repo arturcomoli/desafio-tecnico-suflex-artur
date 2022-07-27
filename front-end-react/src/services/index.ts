@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://app-desafio-suflex.herokuapp.com",
+  baseURL: "http://localhost:8000",
 });
 
 export const charApi = axios.create({
