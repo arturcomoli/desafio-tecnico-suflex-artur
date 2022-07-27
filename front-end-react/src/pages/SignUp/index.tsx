@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import Button from "../../components/Button";
 import Input from "../../components/Input";
@@ -43,7 +44,16 @@ const SignUp = () => {
         className="w-full h-screen flex ;
     justify-center items-center flex-col"
       >
-        <form
+        <motion.form
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          transition={{
+            duration: 1,
+          }}
           className="flex flex-col gap-y-3 
       p-5 w-11/12 max-w-md rounded-2xl bg-bg-aqua"
           onSubmit={handleSubmit(handleSignUp)}
@@ -89,7 +99,7 @@ const SignUp = () => {
               Ir para a homepage
             </Link>
           </p>
-        </form>
+        </motion.form>
       </div>
     </main>
   );

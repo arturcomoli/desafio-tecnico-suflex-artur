@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { motion } from "framer-motion";
+
 import CharList from "../../components/CharList";
 import Header from "../../components/Header";
 import { useAuth } from "../../providers/Authentication";
@@ -20,7 +22,18 @@ const Favorites = () => {
   return (
     <>
       <Header path="/" text="Voltar à home" />
-      <main className="w-full my-5">
+      <motion.main
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+        }}
+        transition={{
+          duration: 1,
+        }}
+        className="w-full my-5"
+      >
         <h2 className="flex flex-1 justify-center text-lg sm:text-2xl w-11/12 mx-auto text-blue-txt">
           Lista de personagens favoritos de: {owner}
         </h2>
@@ -32,7 +45,7 @@ const Favorites = () => {
         ) : (
           <CharList toDelete chars={favChars} />
         )}
-      </main>
+      </motion.main>
     </>
   );
 };

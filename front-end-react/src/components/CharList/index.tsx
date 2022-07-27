@@ -1,18 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+
 import { ICharRetrieve } from "../../pages/interfaces";
 import { useChars } from "../../providers/Characters";
 import Button from "../Button";
 import CharCard from "../CharCard";
 import { IDeleteChar } from "../CharCard/interfaces";
 import SearchInput from "../SearchInput";
+import Spinner from "../Spinner";
 
 const CharList = ({ toDelete, chars }: IDeleteChar) => {
   const [page, setPage] = useState<number>(1);
 
   const [filterPage, setFilterPage] = useState<number>(1);
 
-  const { maxPages, retrieveCharsHome, filteredChars } = useChars();
+  const { maxPages, retrieveCharsHome, filteredChars, loading } = useChars();
 
   const location = useLocation();
 
@@ -34,23 +37,37 @@ const CharList = ({ toDelete, chars }: IDeleteChar) => {
   }, [chars]);
 
   return (
-    <section>
+    <motion.section
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      transition={{
+        duration: 1,
+      }}
+    >
       {location.pathname !== "/" ? null : (
         <SearchInput filterPage={filterPage} setFilterPage={setFilterPage} />
       )}
-
-      <ul
-        className="w-11/12 relative overflow-x-auto flex my-7 mx-auto
+      {loading ? (
+        <Spinner />
+      ) : (
+        <ul
+          className="w-11/12 relative overflow-x-auto flex my-7 mx-auto
       lg:flex-wrap gap-5 lg:justify-center"
-      >
-        {filteredChars.length
-          ? filteredChars.map((data: ICharRetrieve) => (
-              <CharCard key={data.id} data={data} toDelete={toDelete} />
-            ))
-          : chars?.map((data: ICharRetrieve) => (
-              <CharCard key={data.id} data={data} toDelete={toDelete} />
-            ))}
-      </ul>
+        >
+          {filteredChars.length
+            ? filteredChars.map((data: ICharRetrieve) => (
+                <CharCard key={data.id} data={data} toDelete={toDelete} />
+              ))
+            : chars?.map((data: ICharRetrieve) => (
+                <CharCard key={data.id} data={data} toDelete={toDelete} />
+              ))}
+        </ul>
+      )}
+
       <div className="w-full flex justify-around">
         <Button size={"lg"} onClick={goBack}>
           Retroceder
@@ -59,7 +76,7 @@ const CharList = ({ toDelete, chars }: IDeleteChar) => {
           Avançar
         </Button>
       </div>
-    </section>
+    </motion.section>
   );
 };
 export default CharList;

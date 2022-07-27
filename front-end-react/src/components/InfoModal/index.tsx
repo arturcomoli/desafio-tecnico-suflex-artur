@@ -1,7 +1,7 @@
 import { AiFillCloseCircle, AiFillStar } from "react-icons/ai";
 import { BsTrashFill } from "react-icons/bs";
+
 import { IModalProps } from "./interfaces";
-import rick_morty from "../../assets/rick_morty.jpeg";
 
 const InfoModal = ({
   open,
