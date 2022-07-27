@@ -235,7 +235,7 @@ $ npm run dev
 
 <br/>
 
-### ✅ Desenvolvedor responsável
+### ✅ Desenvolvedor responsável - Artur Comoli
 
 <img src="https://avatars.githubusercontent.com/u/91695244?v=4" alt="Artur Comoli" style="border-radius: 50%" width="120px"/>
 
