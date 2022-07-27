@@ -12,6 +12,7 @@ export interface CharProviderData {
   owner: string;
   maxPages: number;
   update: boolean;
+  loading: boolean;
   filterChars: ({ filterPage, name, species }: ICharFilter) => void;
   cleanFilters: () => void;
   handleUpdate: () => void;

@@ -13,20 +13,24 @@ export const CharactersProvider = ({ children }: CharProviderProps) => {
   const [maxPages, setMaxPages] = useState<number>(0);
   const [owner, setOwner] = useState<string>("");
   const [update, setUpdate] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleUpdate = () => {
     setUpdate(!update);
   };
 
   const filterChars = ({ filterPage, name, species }: ICharFilter) => {
+    setLoading(true);
     charApi
       .get(`/character/?page=${filterPage}&name=${name}&species=${species}`)
       .then((res) => {
         setFilteredChars(res.data.results);
+        setLoading(false);
         return setMaxPages(res.data.info.pages);
       })
       .catch((_) => {
         setFilteredChars([]);
+        setLoading(false);
         toast.error(
           "Ops, não existem personagens com os filtros selecionados!"
         );
@@ -34,19 +38,24 @@ export const CharactersProvider = ({ children }: CharProviderProps) => {
   };
 
   const cleanFilters = () => {
+    setLoading(true);
     setFilteredChars([]);
+    setLoading(false);
   };
 
   const retrieveCharsHome = (page: number) => {
+    setLoading(true);
     charApi
       .get(`/character/?page=${page}`)
       .then((res) => {
         setChars(res.data.results);
+        setLoading(false);
         return setMaxPages(res.data.info.pages);
       })
-      .catch((_) =>
-        toast.error("Algo deu errado no carregamento dos personagens")
-      );
+      .catch((_) => {
+        setLoading(false);
+        return toast.error("Algo deu errado no carregamento dos personagens");
+      });
   };
 
   const addFavoriteChars = (data: ICharData, token: string) => {
@@ -72,6 +81,7 @@ export const CharactersProvider = ({ children }: CharProviderProps) => {
   };
 
   const retrieveFavoriteChars = (token: string) => {
+    setLoading(true);
     const options = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -83,14 +93,17 @@ export const CharactersProvider = ({ children }: CharProviderProps) => {
       .then((res) => {
         setOwner(res.data.name);
         setFavChars(res.data.favorite_characters);
+        setLoading(false);
         const max = Math.ceil(res.data.favorite_characters.length / 20);
+
         return setMaxPages(max);
       })
-      .catch((_) =>
-        toast.error("Algo deu errado, tente refazer o seu login", {
+      .catch((_) => {
+        setLoading(false);
+        return toast.error("Algo deu errado, tente refazer o seu login", {
           id: "error",
-        })
-      );
+        });
+      });
   };
 
   const deleteFavoriteChar = (token: string, id: number) => {
@@ -127,6 +140,7 @@ export const CharactersProvider = ({ children }: CharProviderProps) => {
         update,
         handleUpdate,
         setFilteredChars,
+        loading,
       }}
     >
       {children}
