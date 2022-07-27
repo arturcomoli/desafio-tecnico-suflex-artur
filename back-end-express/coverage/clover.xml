@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1658695314189" clover="3.2.0">
-  <project timestamp="1658695314189" name="All files">
-    <metrics statements="873" coveredstatements="840" conditionals="73" coveredconditionals="57" methods="28" coveredmethods="28" elements="974" coveredelements="925" complexity="0" loc="873" ncloc="873" packages="11" files="28" classes="28"/>
+<coverage generated="1658886775954" clover="3.2.0">
+  <project timestamp="1658886775954" name="All files">
+    <metrics statements="876" coveredstatements="843" conditionals="73" coveredconditionals="57" methods="28" coveredmethods="28" elements="977" coveredelements="928" complexity="0" loc="876" ncloc="876" packages="11" files="28" classes="28"/>
     <package name="src">
-      <metrics statements="49" coveredstatements="31" conditionals="1" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="52" coveredstatements="34" conditionals="1" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="app.ts" path="/home/artur/Desktop/desafio-tecnico-suflex-artur/back-end-express/src/app.ts">
-        <metrics statements="19" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="22" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -19,12 +19,15 @@
         <line num="11" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
       </file>
       <file name="data-source.ts" path="/home/artur/Desktop/desafio-tecnico-suflex-artur/back-end-express/src/data-source.ts">
         <metrics statements="30" coveredstatements="13" conditionals="1" coveredconditionals="0" methods="0" coveredmethods="0"/>
