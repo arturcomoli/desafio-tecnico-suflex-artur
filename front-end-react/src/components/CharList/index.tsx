@@ -17,24 +17,28 @@ const CharList = ({ toDelete, chars }: IDeleteChar) => {
 
   const { maxPages, retrieveCharsHome, filteredChars, loading } = useChars();
 
+  console.log(filteredChars);
+  console.log(filterPage);
+  console.log(maxPages);
+
   const location = useLocation();
 
   useEffect(() => {
     if (!filteredChars.length) return retrieveCharsHome(page);
-  }, [page]);
+  }, [page, filterPage]);
 
   const advance = useCallback(() => {
     if (filteredChars.length && filterPage < maxPages)
       return setFilterPage((filterPage) => filterPage + 1);
 
     if (page < maxPages) setPage((page) => page + 1);
-  }, [chars]);
+  }, [chars, filterPage, filteredChars]);
 
   const goBack = useCallback(() => {
     if (filteredChars.length && filterPage > 1)
       return setFilterPage((filterPage) => filterPage - 1);
     if (page > 1) setPage((page) => page - 1);
-  }, [chars]);
+  }, [chars, filterPage, filteredChars]);
 
   return (
     <motion.section
