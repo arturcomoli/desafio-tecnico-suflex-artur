@@ -17,20 +17,15 @@ const CharList = ({ toDelete, chars }: IDeleteChar) => {
 
   const { maxPages, retrieveCharsHome, filteredChars, loading } = useChars();
 
-  console.log(filteredChars);
-  console.log(filterPage);
-  console.log(maxPages);
-
   const location = useLocation();
 
   useEffect(() => {
     if (!filteredChars.length) return retrieveCharsHome(page);
-  }, [page, filterPage]);
+  }, [page, filterPage, filteredChars]);
 
   const advance = useCallback(() => {
     if (filteredChars.length && filterPage < maxPages)
       return setFilterPage((filterPage) => filterPage + 1);
-
     if (page < maxPages) setPage((page) => page + 1);
   }, [chars, filterPage, filteredChars]);
 
