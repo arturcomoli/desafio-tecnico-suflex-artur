@@ -24,6 +24,7 @@ export default class CreateCharacterService {
     const char = await charRepository.findOne({
       where: {
         name,
+        userId,
       },
     });
 
