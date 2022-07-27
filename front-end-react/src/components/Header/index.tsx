@@ -7,7 +7,7 @@ import { handleNavigate } from "../../utils";
 import Button from "../Button";
 import { IHeaderProps } from "./interfaces";
 
-const Header = ({ path, text }: IHeaderProps) => {
+const Header = ({ path, text, disabled }: IHeaderProps) => {
   const navigate = useNavigate();
 
   const { authToken, logoutUser } = useAuth();
@@ -34,7 +34,22 @@ const Header = ({ path, text }: IHeaderProps) => {
       <Link to="/" className="">
         <img src={boss} alt="logo" className="w-28 sm:w-32 md:w-36 lg:w-44" />
       </Link>
-      <Button onClick={() => handleNavigate(navigate, path)}>{text}</Button>
+      <div className="flex flex-col group">
+        <Button
+          disabled={disabled}
+          onClick={() => handleNavigate(navigate, path)}
+        >
+          {text}
+        </Button>
+        {!authToken && (
+          <p
+            className="hidden group-hover:block text-blue-txt 
+            transition-all duration-300 text-center"
+          >
+            Disponível após o login!
+          </p>
+        )}
+      </div>
       <Button onClick={handleAuthHeader}>
         {authToken ? "Logout" : "Login"}
       </Button>
